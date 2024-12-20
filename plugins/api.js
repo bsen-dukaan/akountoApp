@@ -2,7 +2,7 @@ import axios from "axios";
 
 class API {
   constructor() {
-    this.baseURL = "https://kounto.dukaaninfra.in/api"; //  "https://api.kounto.ai/api";
+    this.baseURL = "https://api.kounto.ai/api"; //  "https://api.kounto.ai/api";
     if (typeof window !== "undefined") {
       this.token = localStorage.getItem("token");
     } else {

@@ -178,25 +178,18 @@ export default {
 
         const response = await this.$api.integrations.list(companyId);
 
-        if (response.data.hasOwnProperty("hasActiveIntegration")) {
-          // New API response format
-          this.isConnected = response.data.integrationStatus === "Connected";
+        // Update connected status based on response status code
+        this.isConnected = response.status === 200;
+
+        // Handle any additional data if needed
+        if (response.data) {
           this.integrationId = response.data.integrationId;
           this.lastSyncedAt = response.data.lastSyncedAt;
-        } else {
-          // Legacy format handling
-          const integration = response.data.find(
-            (int) => int.service_type === "Quickbooks",
-          );
-          if (integration) {
-            this.isConnected = integration.status === "Connected";
-            this.integrationId = integration.id;
-            this.lastSyncedAt = integration.updatedAt;
-          }
         }
       } catch (error) {
         console.error("Status check error:", error);
         this.error = "Failed to check integration status.";
+        this.isConnected = false;
       } finally {
         this.isLoading = false;
       }

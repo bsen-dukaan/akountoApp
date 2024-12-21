@@ -166,6 +166,8 @@ const login = async () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     isRegistering.value = false;
     if (user.token) {
+      localStorage.setItem("token", user.token);
+      localStorage.setItem("companyID", user.companyId);
       router.push("/");
     } else {
       error.value = "Unable to create account :  " + user.message;
@@ -175,7 +177,6 @@ const login = async () => {
     console.error("Registration failed:", error);
   }
 };
-
 definePageMeta({
   layout: "blank",
 });

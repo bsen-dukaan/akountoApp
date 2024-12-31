@@ -94,8 +94,6 @@
           </button> -->
         </div>
       </div>
-
-      <HomeOnboarding class="max-w-sm md:p-6 ml-0 mt-4" />
     </div>
   </div>
 </template>

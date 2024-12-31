@@ -86,7 +86,10 @@
       v-if="isLoading"
       class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50"
     >
-      <div class="bg-white p-4 rounded-lg shadow-lg">
+      <div
+        class="bg-white p-4 rounded-lg shadow-lg flex items-center space-x-2"
+      >
+        <div class="loader"></div>
         <p class="text-gray-700">{{ loadingMessage }}</p>
       </div>
     </div>
@@ -141,33 +144,6 @@ export default {
       }
     },
 
-    async handleDisconnect() {
-      if (!confirm("Are you sure you want to disconnect QuickBooks?")) return;
-
-      this.isLoading = true;
-      this.loadingMessage = "Disconnecting from QuickBooks...";
-
-      try {
-        const companyId = localStorage.getItem("companyID");
-        if (!companyId || !this.integrationId) {
-          throw new Error("Required IDs not found");
-        }
-
-        await this.$api.integrations.update(companyId, this.integrationId, {
-          status: "Disconnected",
-        });
-
-        this.isConnected = false;
-        this.integrationId = null;
-        await this.fetchIntegrationStatus();
-      } catch (error) {
-        console.error("Disconnection error:", error);
-        this.error = "Failed to disconnect QuickBooks. Please try again.";
-      } finally {
-        this.isLoading = false;
-      }
-    },
-
     async fetchIntegrationStatus() {
       this.isLoading = true;
       this.loadingMessage = "Checking integration status...";
@@ -177,14 +153,24 @@ export default {
         if (!companyId) throw new Error("Company ID not found");
 
         const response = await this.$api.integrations.list(companyId);
+        console.log("Integration status response:", response); // Debug log
 
-        // Update connected status based on response status code
-        this.isConnected = response.status === 200;
+        // Update integration details based on response
+        if (response.data && response.data.length > 0) {
+          // Find QuickBooks integration if multiple integrations exist
+          const qbIntegration =
+            response.data.find((int) => int.type === "quickbooks") ||
+            response.data[0];
 
-        // Handle any additional data if needed
-        if (response.data) {
-          this.integrationId = response.data.integrationId;
-          this.lastSyncedAt = response.data.lastSyncedAt;
+          this.isConnected = true;
+          this.integrationId = qbIntegration.id || qbIntegration.integrationId;
+          this.lastSyncedAt = qbIntegration.lastSyncedAt;
+
+          console.log("Integration ID set to:", this.integrationId); // Debug log
+        } else {
+          this.isConnected = false;
+          this.integrationId = null;
+          this.lastSyncedAt = null;
         }
       } catch (error) {
         console.error("Status check error:", error);
@@ -192,6 +178,48 @@ export default {
         this.isConnected = false;
       } finally {
         this.isLoading = false;
+      }
+    },
+
+    async handleDisconnect() {
+      try {
+        this.isLoading = true;
+        this.loadingMessage = "Disconnecting from QuickBooks...";
+
+        const companyId = localStorage.getItem("companyID");
+        if (!companyId) throw new Error("Company ID not found");
+
+        // Match exactly with your backend endpoint
+        const response = await fetch(
+          `http://localhost:4000/api/delete-quickbooks-integration/${companyId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+          },
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to disconnect QuickBooks");
+        }
+
+        // Update state after successful disconnection
+        this.isConnected = false;
+        this.integrationId = null;
+        this.lastSyncedAt = null;
+
+        // Refetch integration status
+        await this.fetchIntegrationStatus();
+      } catch (error) {
+        console.error("Disconnection error:", error);
+        this.error = error.message;
+      } finally {
+        this.isLoading = false;
+        this.loadingMessage = "";
       }
     },
   },

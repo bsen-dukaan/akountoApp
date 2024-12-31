@@ -25,7 +25,7 @@
             </p>
             <div class="flex justify-between items-center">
               <span
-                class="bg-yellow-100 text-yellow-800 py-1 px-2 rounded-full text-xs"
+                class="bg-green-100 text-green-800 py-1 px-2 rounded-full text-xs"
                 >To Review</span
               >
               <a href="#" class="text-blue-500 hover:text-blue-600 text-sm"

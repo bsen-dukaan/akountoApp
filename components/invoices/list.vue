@@ -123,7 +123,7 @@
 
               <div class="" v-if="expense.status === 'To Review'">
                 <span
-                  class="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded-xl ml-2 bg-yellow-600 text-white"
+                  class="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded-xl ml-2 bg-green-600 text-white"
                 >
                   Missing Data
                 </span>

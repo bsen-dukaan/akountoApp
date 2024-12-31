@@ -110,7 +110,7 @@ const navItems = computed(() => [
     icon: UsersIcon,
     current: status.value === "archived",
     count: getCount("archived"),
-    color: "bg-yellow-500",
+    color: "bg-green-500",
   },
 ]);
 </script>

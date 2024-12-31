@@ -62,8 +62,8 @@ const actions = ref([
   },
   {
     label: "Review Pending",
-    bgColor: "bg-yellow-100 hover:bg-yellow-200",
-    textColor: "text-yellow-800",
+    bgColor: "bg-green-100 hover:bg-green-200",
+    textColor: "text-green-800",
     icon: ClipboardDocumentCheckIcon,
     handler: () => {
       pushToViewPendingData();

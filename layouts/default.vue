@@ -392,7 +392,7 @@ const navigation = [
     icon: TruckIcon,
     current: false,
   },
-  { name: "Reports", href: `/reports`, icon: ChartPieIcon, current: false },
+  // { name: "Reports", href: `/reports`, icon: ChartPieIcon, current: false },
   // { name: "Billing", href: `/account/billing`, icon: Cog6ToothIcon, current: false },
 ];
 

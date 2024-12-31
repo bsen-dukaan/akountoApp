@@ -213,7 +213,7 @@
           >
           <span
             v-else-if="document.status === 'Extraction'"
-            class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-800"
+            class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800"
             >Extracting Data</span
           >
           <span
@@ -311,7 +311,7 @@
                   >
                   <span
                     v-else-if="document.status === 'Extraction'"
-                    class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-800"
+                    class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800"
                     >Extraction</span
                   >
                   <span

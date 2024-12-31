@@ -161,7 +161,7 @@ const statusStyles = {
   Extraction: "bg-orange-100 text-orange-800",
   MissingData: "bg-red-100 text-red-800",
   Ready: "bg-green-100 text-green-800",
-  Processing: "bg-yellow-100 text-yellow-800",
+  Processing: "bg-green-100 text-green-800",
   Processed: "bg-purple-100 text-purple-800",
 };
 
@@ -179,7 +179,4 @@ watch(
     console.log("Customers data changed:", newVal);
   },
 );
-
-
-
 </script>

@@ -65,9 +65,6 @@ import { useNuxtApp } from "#app";
 
 const integrations = ref([
   { id: 1, name: "QuickBooks", logo: "quickbooks.com" },
-  { id: 2, name: "Xero", logo: "xero.com" },
-  { id: 3, name: "Wave", logo: "wave.com" },
-  { id: 4, name: "Freshbooks", logo: "freshbooks.com" },
 ]);
 
 const selectedIntegration = ref({

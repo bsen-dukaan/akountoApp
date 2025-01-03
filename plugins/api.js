@@ -3,6 +3,7 @@ import axios from "axios";
 class API {
   constructor() {
     this.baseURL = "https://api.kounto.ai/api";
+    // this.baseURL = "http://localhost:4000/api";
     if (typeof window !== "undefined") {
       this.token = localStorage.getItem("token");
     } else {
